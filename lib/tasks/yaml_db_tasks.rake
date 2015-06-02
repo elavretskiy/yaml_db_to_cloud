@@ -1,3 +1,5 @@
+require 'archive_zip'
+
 namespace :db do
   desc "Dump schema and data to db/schema.rb and db/data.yml"
   task(:dump => [ "db:schema:dump", "db:data:dump" ])
@@ -6,6 +8,12 @@ namespace :db do
   task(:load => [ "db:schema:load", "db:data:load" ])
 
   namespace :data do
+    desc "Dump contents of database to curr_dir_name/tablename.extension (defaults to yaml)"
+    task :dump_dir_zip => :environment do
+      YamlDb::RakeTasks.data_dump_dir_task
+      ArchiveZip.add_directory
+    end
+
     desc "Dump contents of database to db/data.extension (defaults to yaml)"
     task :dump => :environment do
       YamlDb::RakeTasks.data_dump_task
