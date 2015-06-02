@@ -1,10 +1,5 @@
-require 'archive/zip'
-
 class ArchiveZip
-  class << self
-    def add_directory
-      time = Time.now.strftime('%F_%T')
+    def self.add_directory(time)
       Archive::Zip.archive("#{Rails.root}/db/#{time}.zip", "#{Rails.root}/db/#{time}")
     end
-  end
 end

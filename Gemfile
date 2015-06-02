@@ -10,3 +10,5 @@ if RUBY_VERSION =~ /^1\.8\.7/ || RUBY_VERSION =~ /^1\.9\.2/
 end
 
 gem 'archive-zip'
+gem 'figaro'
+gem 'fog'
