@@ -19,12 +19,12 @@ module YamlDb
     end
 
     # Dump and load data with zip
-    def self.data_dump_dir_task_zip(file_name)
+    def self.data_dump_dir_for_zip(file_name)
       SerializationHelper::Base.new(helper).
         dump_to_dir(dump_dir("/#{file_name}"))
     end
 
-    def self.data_load_dir_task_zip(file_name)
+    def self.data_load_dir_for_zip(file_name)
       SerializationHelper::Base.new(helper).
         load_from_dir(dump_dir("/#{file_name}"))
     end

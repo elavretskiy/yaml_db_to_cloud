@@ -2,10 +2,10 @@ require 'archive_zip'
 
 class AmazonS3
   class << self
-    def backup_to_s3
+    def backup_dump
       file_name = Time.now.strftime('%F_%T')
 
-      YamlDb::RakeTasks.data_dump_dir_task_zip(file_name)
+      YamlDb::RakeTasks.data_dump_dir_for_zip(file_name)
       ArchiveZip.add_to_zip(file_name)
       backup_zip(file_name)
 
@@ -13,26 +13,14 @@ class AmazonS3
       ArchiveZip.remove_folder(file_name)
     end
 
-    def restore_from_s3(file_name)
+    def restore_dump(file_name)
       restore_zip(file_name)
       ArchiveZip.restore_from_zip(file_name)
-      YamlDb::RakeTasks.data_load_dir_task_zip(file_name)
+      YamlDb::RakeTasks.data_load_dir_for_zip(file_name)
 
       ArchiveZip.remove_zip(file_name)
       ArchiveZip.remove_folder(file_name)
     end
-
-    private
-
-    def amazon_s3_connection
-      Fog::Storage.new({
-                         :provider                 => 'AWS',
-                         :aws_access_key_id        => ENV['ACCESS_KEY_ID'],
-                         :aws_secret_access_key    => ENV['SECRET_ACCESS_KEY']
-                       })
-    end
-
-    private
 
     def backup_zip(file_name)
       connection = amazon_s3_connection
@@ -66,6 +54,16 @@ class AmazonS3
         local_file.write(s3_file.body)
         local_file.close
       end
+    end
+
+    private
+
+    def amazon_s3_connection
+      Fog::Storage.new({
+                         :provider                 => 'AWS',
+                         :aws_access_key_id        => ENV['ACCESS_KEY_ID'],
+                         :aws_secret_access_key    => ENV['SECRET_ACCESS_KEY']
+                       })
     end
 
     def dump_dir(dir = '')

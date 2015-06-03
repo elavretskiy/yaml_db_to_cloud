@@ -38,7 +38,7 @@ namespace :db do
     # Restore backup: Archive Zip and Amazon S3
     desc "Restore backup zip from s3 to db"
     task :dump_restore_zip_from_s3, [:file_name] => :environment do |t, args|
-      AmazonS3.restore_from_s3(args.file_name)
+      AmazonS3.restore_dump(args.file_name)
     end
 
     # Rufus Scheduler Backup
@@ -47,7 +47,7 @@ namespace :db do
       scheduler = Rufus::Scheduler.new
 
       scheduler.at '04:00:00' do
-        AmazonS3.backup_to_s3
+        AmazonS3.backup_dump
       end
 
       scheduler.join
