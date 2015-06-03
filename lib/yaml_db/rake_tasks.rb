@@ -4,8 +4,8 @@ module YamlDb
       SerializationHelper::Base.new(helper).dump(db_dump_data_file(helper.extension))
     end
 
-    def self.data_dump_dir_task(time)
-      dir = ENV['dir'] || time
+    def self.data_dump_dir_task
+      dir = ENV['dir'] || Time.now.strftime('%F_%T')
       SerializationHelper::Base.new(helper).dump_to_dir(dump_dir("/#{dir}"))
     end
 
@@ -16,6 +16,17 @@ module YamlDb
     def self.data_load_dir_task
       dir = ENV['dir'] || 'base'
       SerializationHelper::Base.new(helper).load_from_dir(dump_dir("/#{dir}"))
+    end
+
+    # Dump and load data with zip
+    def self.data_dump_dir_task_zip(file_name)
+      SerializationHelper::Base.new(helper).
+        dump_to_dir(dump_dir("/backups/#{file_name}"))
+    end
+
+    def self.data_load_dir_task_zip(file_name)
+      SerializationHelper::Base.new(helper).
+        load_from_dir(dump_dir("/restores/#{file_name}"))
     end
 
     private
