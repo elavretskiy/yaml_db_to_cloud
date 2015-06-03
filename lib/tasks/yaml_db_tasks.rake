@@ -1,5 +1,5 @@
-require 'archive_zip'
 require 'amazon_s3'
+require 'rufus/scheduler'
 
 namespace :db do
   desc "Dump schema and data to db/schema.rb and db/data.yml"
@@ -30,61 +30,27 @@ namespace :db do
     end
 
     # Create backup: Archive Zip and Amazon S3
-    desc "Dump contents of database to dir and zip"
-    task :dump_dir_zip => :environment do
-      file_name = Time.now.strftime('%F_%T')
-      YamlDb::RakeTasks.data_dump_dir_task_zip(file_name)
-      ArchiveZip.add_to_zip(file_name)
-    end
-
     desc "Dump contents of database to dir and zip with load to s3"
-    task :dump_dir_zip_to_s3 => :environment do
-      file_name = Time.now.strftime('%F_%T')
-      YamlDb::RakeTasks.data_dump_dir_task_zip(file_name)
-      ArchiveZip.add_to_zip(file_name)
-      AmazonS3.backup_zip(file_name)
-    end
-
-    desc "Dump zip to s3"
-    task :dump_zip_to_s3, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      AmazonS3.backup_zip(file_name)
+    task :dump_backup_zip_to_s3 => :environment do
+      AmazonS3.backup_to_s3
     end
 
     # Restore backup: Archive Zip and Amazon S3
-    desc "Load zip from s3"
-    task :load_zip_from_s3, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      AmazonS3.restore_zip(file_name)
+    desc "Restore backup zip from s3 to db"
+    task :dump_restore_zip_from_s3, [:file_name] => :environment do |t, args|
+      AmazonS3.restore_from_s3(args.file_name)
     end
 
-    desc "Load zip from s3 to dir"
-    task :load_zip_from_s3_to_dir, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      AmazonS3.restore_zip(file_name)
-      ArchiveZip.restore_from_zip(file_name)
-    end
+    # Rufus Scheduler Backup
+    desc "Rufus Scheduler Backup"
+    task :dump_scheduler_backup => :environment do
+      scheduler = Rufus::Scheduler.new
 
-    desc "Load zip from s3 to dir and db"
-    task :load_zip_from_s3_to_dir_and_db, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      AmazonS3.restore_zip(file_name)
-      ArchiveZip.restore_from_zip(file_name)
-      YamlDb::RakeTasks.data_load_dir_task_zip(file_name)
-    end
+      scheduler.at '04:00:00' do
+        AmazonS3.backup_to_s3
+      end
 
-    desc "Load zip to dir and db"
-    task :load_zip_to_dir_and_db, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      ArchiveZip.restore_from_zip(file_name)
-      YamlDb::RakeTasks.data_load_dir_task_zip(file_name)
-    end
-
-    desc "Load dir to db"
-    task :load_dir_to_db, [:file_name] => :environment do |t, args|
-      file_name = args.file_name
-      ArchiveZip.restore_from_zip(file_name)
-      YamlDb::RakeTasks.data_load_dir_task_zip(file_name)
+      scheduler.join
     end
   end
 end
