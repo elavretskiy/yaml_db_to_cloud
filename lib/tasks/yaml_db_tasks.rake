@@ -45,17 +45,5 @@ namespace :db do
     task :dump_restore_last_zip_from_s3 => :environment do
       FogAws.restore_last_dump_from_s3
     end
-
-    # Rufus Scheduler Backup
-    desc "Rufus Scheduler Backup"
-    task :dump_scheduler_backup => :environment do
-      scheduler = Rufus::Scheduler.new
-
-      scheduler.at '04:00:00' do
-        FogAws.backup_dump_to_s3
-      end
-
-      scheduler.join
-    end
   end
 end
