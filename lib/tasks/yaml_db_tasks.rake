@@ -1,4 +1,4 @@
-require 'amazon_s3'
+require 'fog_aws'
 require 'rufus/scheduler'
 
 namespace :db do
@@ -32,13 +32,18 @@ namespace :db do
     # Create backup: Archive Zip and Amazon S3
     desc "Dump contents of database to dir and zip with load to s3"
     task :dump_backup_zip_to_s3 => :environment do
-      AmazonS3.backup_to_s3
+      FogAws.backup_dump_to_s3
     end
 
     # Restore backup: Archive Zip and Amazon S3
-    desc "Restore backup zip from s3 to db"
-    task :dump_restore_zip_from_s3, [:file_name] => :environment do |t, args|
-      AmazonS3.restore_dump(args.file_name)
+    desc "Restore backup zip from s3 to db by name"
+    task :dump_restore_zip_from_s3_by_name, [:file_name] => :environment do |t, args|
+      FogAws.restore_dump_by_name_from_s3(args.file_name)
+    end
+
+    desc "Restore last backup zip from s3 to db"
+    task :dump_restore_last_zip_from_s3 => :environment do
+      FogAws.restore_last_dump_from_s3
     end
 
     # Rufus Scheduler Backup
@@ -47,7 +52,7 @@ namespace :db do
       scheduler = Rufus::Scheduler.new
 
       scheduler.at '04:00:00' do
-        AmazonS3.backup_dump
+        FogAws.backup_dump_to_s3
       end
 
       scheduler.join
