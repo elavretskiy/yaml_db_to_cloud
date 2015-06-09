@@ -5,11 +5,11 @@ require 'yaml_db/version'
 
 Gem::Specification.new do |s|
   s.platform      = Gem::Platform::RUBY
-  s.name          = 'yaml_db_to_cloud'
+  s.name          = 'yaml_db'
   s.version       = YamlDb::VERSION
-  s.authors       = ['Alex Bobrov', 'Evgeny Lavrentsky']
-  s.summary       = %q{yaml_db allows export/import of database into/from yaml files and save to cloud}
-  s.description   = "\nYamlDb is a database-independent format for dumping and restoring data.  It complements the database-independent schema format found in db/schema.rb.  The data is saved into db/data.yml.\nThis can be used as a replacement for mysqldump or pg_dump, but only for the databases typically used by Rails apps.  Users, permissions, schemas, triggers, and other advanced database features are not supported - by design.\nAny database that has an ActiveRecord adapter should work.\n"
+  s.authors       = ['Alex Bobrov', 'Evgeniy Lavretskiy']
+  s.summary       = %q{yaml_db_to_cloud allows export/import of database into/from yaml files and save to cloud}
+  s.description   = "\nYamlDb is a database-independent format for dumping and restoring data. It complements the database-independent schema format found in db/schema.rb.  The data is saved into db/data.yml.\nThis can be used as a replacement for mysqldump or pg_dump, but only for the databases typically used by Rails apps.  Users, permissions, schemas, triggers, and other advanced database features are not supported - by design.\nAny database that has an ActiveRecord adapter should work.\n"
   s.homepage      = 'https://github.com/itbeaver/yaml_db_to_cloud'
   s.license       = 'MIT'
 
