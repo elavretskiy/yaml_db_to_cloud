@@ -1,4 +1,5 @@
 require 'archive_zip'
+require 'fog/aws'
 
 class FogAws
   class << self
@@ -88,7 +89,8 @@ class FogAws
       Fog::Storage.new({
                          provider:                 'AWS',
                          aws_access_key_id:        ENV['ACCESS_KEY_ID'],
-                         aws_secret_access_key:    ENV['SECRET_ACCESS_KEY']
+                         aws_secret_access_key:    ENV['SECRET_ACCESS_KEY'],
+                         region: ENV['AWS_REGION']
                        })
     end
 

@@ -1,3 +1,5 @@
+require 'archive/zip'
+
 class ArchiveZip
   class << self
     def add_to_zip(file_name)

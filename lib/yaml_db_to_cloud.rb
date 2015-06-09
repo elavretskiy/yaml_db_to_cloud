@@ -70,7 +70,7 @@ module YamlDb
 
   class Railtie < Rails::Railtie
     rake_tasks do
-      load File.expand_path('../tasks/yaml_db_tasks.rake',
+      load File.expand_path('../tasks/yaml_db_to_cloud_tasks.rake',
 __FILE__)
     end
   end
