@@ -1,4 +1,4 @@
-# YamlDb
+# YamlDbToCloud
 
 YamlDb is a database-independent format for dumping and restoring data.  It complements the database-independent schema format found in db/schema.rb.  The data is saved into db/data.yml.
 
@@ -14,7 +14,8 @@ This gem supports Rails 3.x and 4.x.
 
 Simply add to your Gemfile:
 
-    gem 'yaml_db'
+    gem 'yaml_db_to_cloud'
+    rails g yaml_db_to_cloud  - > install rufus init for every day backups
 
 All rake tasks will then be available to you.
 

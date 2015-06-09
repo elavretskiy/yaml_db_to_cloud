@@ -86,9 +86,9 @@ class FogAws
 
     def connection_to_aws
       Fog::Storage.new({
-                         :provider                 => 'AWS',
-                         :aws_access_key_id        => ENV['ACCESS_KEY_ID'],
-                         :aws_secret_access_key    => ENV['SECRET_ACCESS_KEY']
+                         provider:                 'AWS',
+                         aws_access_key_id:        ENV['ACCESS_KEY_ID'],
+                         aws_secret_access_key:    ENV['SECRET_ACCESS_KEY']
                        })
     end
 
