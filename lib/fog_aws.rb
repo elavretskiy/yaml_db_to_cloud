@@ -96,6 +96,7 @@ class FogAws
                          provider:                 'AWS',
                          aws_access_key_id:        ENV['ACCESS_KEY_ID'],
                          aws_secret_access_key:    ENV['SECRET_ACCESS_KEY'],
+                         region:                   ENV['AWS_REGION']
                        })
     end
 
