@@ -135,8 +135,8 @@ class FogAws
     end
 
     def remove_folder_zip(file_name)
-      Archive.remove_folder(file_name)
-      Archive.remove_zip(file_name)
+      ArchiveZip.remove_folder(file_name)
+      ArchiveZip.remove_zip(file_name)
     end
   end
 end
