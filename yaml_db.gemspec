@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'archive-zip'
   s.add_dependency 'figaro'
   s.add_dependency 'fog'
+  s.add_dependency 'rufus-scheduler'
 end
