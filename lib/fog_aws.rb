@@ -5,7 +5,7 @@ class FogAws
   class << self
     def backup_dump_to_s3
       db_name = get_db_name
-      file_name = "#{Time.zone.now.strftime('%F_%T')}"
+      file_name = "#{Time.zone.now.strftime('%F-%T')}"
       puts file_name
 
       puts 'Получение файлов резервной копии из БД'

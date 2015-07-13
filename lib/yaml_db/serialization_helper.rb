@@ -19,7 +19,7 @@ module YamlDb
       end
 
       def dump_to_dir(dirname)
-        Dir.mkdir(dirname)
+        Dir.mkdir(dirname) unless Dir.exists?(dirname)
         tables = @dumper.tables
         tables.each do |table|
           File.open("#{dirname}/#{table}.#{@extension}", "w") do |io|
