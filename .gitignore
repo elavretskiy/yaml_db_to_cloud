@@ -2,6 +2,7 @@
 /.bundle/
 /pkg/
 Gemfile.lock
+.idea
 
 # Ignore application configuration
 /config/application.yml
