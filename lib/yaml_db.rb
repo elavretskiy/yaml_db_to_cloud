@@ -22,6 +22,7 @@ module YamlDb
     end
   end
 
+
   module Utils
     def self.chunk_records(records)
       yaml = [ records ].to_yaml
