@@ -5,7 +5,7 @@ class FogAws
   class << self
     def backup_dump_to_s3
       db_name = get_db_name
-      file_name = "#{Time.now.strftime('%F_%T')}"
+      file_name = "#{Time.zone.now.strftime('%F_%T')}"
       puts file_name
 
       puts 'Получение файлов резервной копии из БД'
@@ -124,7 +124,8 @@ class FogAws
 
     def get_db_name
       config = Rails.configuration.database_configuration
-      config[Rails.env]['database']
+      db_name = config[Rails.env]['database']
+      db_name.delete! '_'
     end
   end
 end
