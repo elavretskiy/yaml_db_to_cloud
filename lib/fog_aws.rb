@@ -18,11 +18,11 @@ class FogAws
       backup_zip_to_s3(db_name, file_name)
 
       puts 'Удаление временных файлов'
-      ArchiveZip.remove_folder_zip(file_name)
+      remove_folder_zip(file_name)
 
     rescue Exception => exception
       puts exception.message
-      ArchiveZip.remove_folder_zip(file_name)
+      remove_folder_zip(file_name)
     end
 
     def restore_dump_by_name_from_s3(file_name)
@@ -39,11 +39,11 @@ class FogAws
       YamlDb::RakeTasks.data_load_dir_for_zip(file_name)
 
       puts 'Удаление временных файлов'
-      ArchiveZip.remove_folder_zip(file_name)
+      remove_folder_zip(file_name)
 
     rescue Exception => exception
       puts exception.message
-      ArchiveZip.remove_folder_zip(file_name)
+      remove_folder_zip(file_name)
     end
 
     def restore_last_dump_from_s3
@@ -132,6 +132,11 @@ class FogAws
       config = Rails.configuration.database_configuration
       db_name = config[Rails.env]['database']
       db_name.delete! '_'
+    end
+
+    def remove_folder_zip(file_name)
+      Archive.remove_folder(file_name)
+      Archive.remove_zip(file_name)
     end
   end
 end
