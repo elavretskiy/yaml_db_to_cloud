@@ -5,7 +5,7 @@ class FogAws
   class << self
     def backup_dump_to_s3
       db_name = get_db_name
-      file_name = Time.now.strftime('%F-%T').to_s
+      file_name = "#{Time.now.strftime('%F-%T')}"
       puts file_name
 
       puts 'Получение файлов резервной копии из БД'
@@ -18,11 +18,11 @@ class FogAws
       backup_zip_to_s3(db_name, file_name)
 
       puts 'Удаление временных файлов'
-      remove_folder_zip(file_name)
+      clear_folder_zip(file_name)
 
     rescue Exception => exception
       puts exception.message
-      remove_folder_zip(file_name)
+      clear_folder_zip(file_name)
     end
 
     def restore_dump_by_name_from_s3(file_name)
@@ -39,11 +39,11 @@ class FogAws
       YamlDb::RakeTasks.data_load_dir_for_zip(file_name)
 
       puts 'Удаление временных файлов'
-      remove_folder_zip(file_name)
+      clear_folder_zip(file_name)
 
     rescue Exception => exception
       puts exception.message
-      remove_folder_zip(file_name)
+      clear_folder_zip(file_name)
     end
 
     def restore_last_dump_from_s3
@@ -134,9 +134,9 @@ class FogAws
       db_name.delete! '_'
     end
 
-    def remove_folder_zip(file_name)
-      ArchiveZip.remove_folder(file_name)
+    def clear_folder_zip(file_name)
       ArchiveZip.remove_zip(file_name)
+      ArchiveZip.remove_folder(file_name)
     end
   end
 end
