@@ -74,10 +74,6 @@ class FogAws
         public: false
       )
       s3_file.save
-
-    rescue Exception => exception
-      puts exception.message
-      remove_folder_zip(file_name)
     end
 
     def restore_zip_from_s3(db_name, file_name)
@@ -97,10 +93,6 @@ class FogAws
       else
         puts "Каталог #{db_name} не существует"
       end
-
-    rescue Exception => exception
-      puts exception.message
-      remove_folder_zip(file_name)
     end
 
     private
