@@ -20,6 +20,11 @@ class ArchiveZip
       FileUtils.rm_rf(dump_dir("/#{file_name}"))
     end
 
+    def remove_folder_zip(file_name)
+      ArchiveZip.remove_zip(file_name)
+      ArchiveZip.remove_folder(file_name)
+    end
+
     private
 
     def dump_dir(dir = '')
