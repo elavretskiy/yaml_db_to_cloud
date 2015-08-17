@@ -28,9 +28,9 @@ All rake tasks will then be available to you.
 ## Config
 
     Amazon S3 init, add to file .env:
-        ACCESS_KEY_ID='value'
-        SECRET_ACCESS_KEY='value'
-        AWS_REGION='value'
+        ACCESS_KEY_ID=value
+        SECRET_ACCESS_KEY=value
+        AWS_REGION=value
 
     Rufus init for every day backups, create file in config/initializers:
         require 'fog_aws'
