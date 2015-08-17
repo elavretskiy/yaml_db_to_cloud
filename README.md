@@ -16,7 +16,7 @@ This gem supports Rails 3.x and 4.x.
 
 Simply add to your Gemfile:
 
-    gem 'yaml_db', git: 'https://github.com/itbeaver/yaml_db_to_cloud.git'
+    gem 'yaml_db', git: 'https://github.com/elavretskiy/yaml_db_to_cloud.git'
 
 All rake tasks will then be available to you.
 
